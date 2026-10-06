@@ -1,0 +1,37 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "mysql"
+}
+
+enum CourseStatus {
+  ACTIVE
+  INACTIVE
+}
+
+model Course {
+  id           Int          @id @default(autoincrement())
+  name         String
+  instructor   String
+  courseCode   String       @unique
+  category     String       @default("General")
+  capacity     Int          @default(1)
+  fee          Float
+  status       CourseStatus @default(ACTIVE)
+  createdAt    DateTime     @default(now())
+  updatedAt    DateTime     @updatedAt
+}
+
+model Admin {
+  id           Int      @id @default(autoincrement())
+  firstName    String
+  lastName     String
+  email        String   @unique
+  password     String
+  isNeedLogout Boolean  @default(false)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+}
